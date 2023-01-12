@@ -46,4 +46,16 @@ public class PostagemController {
         return postagemRepo.existsById(id);
     }
 
+    @PostMapping("postagem/new")
+    public String salvarPostagem(@RequestParam String titulo, @RequestParam String conteudo, @RequestParam String urlFotoCapa){
+
+        Postagem postagem = new Postagem();
+        postagem.setTitulo(titulo);
+        postagem.setConteudo(conteudo);
+        postagem.setUrlFotoCapa(urlFotoCapa);
+
+        postagemRepo.save(postagem);
+        return "redirect:/";
+    }
+
 }

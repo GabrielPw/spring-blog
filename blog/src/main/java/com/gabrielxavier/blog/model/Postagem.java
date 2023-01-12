@@ -21,4 +21,7 @@ public class Postagem {
 
     @Column(name = "conteudo", columnDefinition = "TEXT")
     private String conteudo;
+
+    @Column(name = "urlfoto", columnDefinition = "TEXT")
+    private String urlFotoCapa;
 }

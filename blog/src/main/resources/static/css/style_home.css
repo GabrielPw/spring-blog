@@ -1,14 +1,14 @@
 .banner{
 
     position: relative;
-    background-image: url('../img/flores.jpg');
+    background-image: url('../img/flores2.jpg');
     width: 100%;
-    height: 405px;
+    height: 300px;
     background-color: purple;
     background-position: center;
 }
 
-.btn-NewPost{
+.btnContainer{
 
     position: absolute;
     overflow: hidden;
@@ -19,3 +19,8 @@
 
     text-decoration:none;
 }
+
+.divCards{
+    display: inline-flex;
+}
+
