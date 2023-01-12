@@ -24,3 +24,12 @@
     display: inline-flex;
 }
 
+.info_post{
+
+    position: relative;
+    padding: 0;
+    height: 30px;
+    margin: 0;
+    display:flex;
+    justify-content: space-between;
+}

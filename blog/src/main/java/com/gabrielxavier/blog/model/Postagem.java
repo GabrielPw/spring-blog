@@ -1,5 +1,6 @@
 package com.gabrielxavier.blog.model;
 
+import com.gabrielxavier.blog.enuns.CategoriaPostagemEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,4 +25,9 @@ public class Postagem {
 
     @Column(name = "urlfoto", columnDefinition = "TEXT")
     private String urlFotoCapa;
+    @Enumerated(EnumType.STRING)
+    private CategoriaPostagemEnum categoria;
+    private String dataPostagem;
+
+
 }

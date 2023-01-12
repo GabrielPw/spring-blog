@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,8 +39,18 @@ public class PostagemController {
     }
 
     @GetMapping("postagem/{id}")
-    public Optional<Postagem> obterPorId(@PathVariable Long id){
-        return postagemRepo.findById(id);
+    public ModelAndView obterPorId(@PathVariable Long id){
+
+        Optional<Postagem> postagem = postagemRepo.findById(id);
+        ModelAndView mv = new ModelAndView("postagem_info");
+
+        if (postagem.isPresent()){
+            mv.addObject("postagem", postagem.get());
+        } else {
+            mv.addObject("postagem", null);
+        }
+
+        return mv;
     }
 
     public boolean existePorId(Long id){
@@ -53,6 +64,10 @@ public class PostagemController {
         postagem.setTitulo(titulo);
         postagem.setConteudo(conteudo);
         postagem.setUrlFotoCapa(urlFotoCapa);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String data = java.time.LocalDate.now().format(formatter).toString();
+        postagem.setDataPostagem(data);
 
         postagemRepo.save(postagem);
         return "redirect:/";
