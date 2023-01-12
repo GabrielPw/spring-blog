@@ -33,3 +33,8 @@
     display:flex;
     justify-content: space-between;
 }
+
+.main_image_post{
+
+    width:24vw;
+}

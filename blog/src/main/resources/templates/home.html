@@ -65,15 +65,18 @@
                 <div th:each="postagem : ${postagens}" class="divCards p-2 col-6 col-sm-3">
                     <div class="card p-2" style="width: 18rem;">
                         <div class="info_post">
-                            <p th:text="${postagem.dataPostagem}" class="text-muted"></p><a href="#"><i class="bi bi-trash3-fill" style="color: rgb(142, 68, 62)"></i></a>
+                            <p th:text="${postagem.dataPostagem}" class="text-muted"></p><a th:href="'/postagem/delete/' + ${postagem.id}"><i class="bi bi-trash3-fill" style="color: rgb(142, 68, 62)"></i></a>
                         </div>
-                        <img th:src="@{${postagem.urlFotoCapa}}" alt="foto de capa do post">
+                        <img th:src="@{${postagem.urlFotoCapa}}" alt="foto de capa do post" class="rounded">
                         <div class="card-body">
                             <h5 th:text="${postagem.titulo}" class="card-title" style="margin:0"></h5>
                             <span th:text="${postagem.categoria}" class="categoria_post text-muted fs-6" style="padding-bottom:25px"></span>
                             <hr class="border border-1 opacity-50">
-                            <p th:text="${#strings.abbreviate(postagem.conteudo, 70)}" class="card-text fs-6"></p> <p><a th:href="@{'/postagem/' + ${postagem.id}}" class="text-info">Ler mais...</a></p>
+                            <p th:text="${#strings.abbreviate(postagem.conteudo, 70)}" class="card-text fs-6"></p> <p><a th:href="@{'/postagem/' + ${#strings.toLowerCase(postagem.titulo.replaceAll('[^A-Za-z0-9À-ú\-]', '-'))}}" class="text-info">Ler mais...</a></p>
                         </div>
+
+                        <!-- th:href="@{'/postagem/delete/' + ${postagem.id}}" -->
+                        <p id="demo" style="display:none"></p>
                     </div>
                 </div>
             </div>

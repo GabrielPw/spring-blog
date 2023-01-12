@@ -28,6 +28,6 @@ public class Postagem {
     @Enumerated(EnumType.STRING)
     private CategoriaPostagemEnum categoria;
     private String dataPostagem;
-
+    private String dataUltimaAtualizacao;
 
 }

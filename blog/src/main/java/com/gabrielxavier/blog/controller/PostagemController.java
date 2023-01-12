@@ -1,6 +1,7 @@
 package com.gabrielxavier.blog.controller;
 
 import com.gabrielxavier.blog.dto.UsuarioDto;
+import com.gabrielxavier.blog.enuns.CategoriaPostagemEnum;
 import com.gabrielxavier.blog.model.Postagem;
 import com.gabrielxavier.blog.model.Role;
 import com.gabrielxavier.blog.model.Usuario;
@@ -27,7 +28,7 @@ public class PostagemController {
     @Autowired
     PostagemRepository postagemRepo;
     @GetMapping("/")
-    public ModelAndView home(Model model){
+    public ModelAndView home(){
 
         System.out.println("\n\n\nHome...");
 
@@ -38,14 +39,17 @@ public class PostagemController {
         return mv;
     }
 
-    @GetMapping("postagem/{id}")
-    public ModelAndView obterPorId(@PathVariable Long id){
+    @GetMapping("postagem/{titulo}")
+    public ModelAndView obterPorTitulo(@PathVariable String titulo){
 
-        Optional<Postagem> postagem = postagemRepo.findById(id);
+        titulo = titulo.replace("-", " ");
+        System.out.println("\nTitulo: " + titulo);
+        Postagem postagem = postagemRepo.findPostagemByTitulo(titulo);
+
         ModelAndView mv = new ModelAndView("postagem_info");
 
-        if (postagem.isPresent()){
-            mv.addObject("postagem", postagem.get());
+        if (postagem != null){
+            mv.addObject("postagem", postagem);
         } else {
             mv.addObject("postagem", null);
         }
@@ -73,4 +77,42 @@ public class PostagemController {
         return "redirect:/";
     }
 
+    @DeleteMapping
+    public String deletarPostagem(Long id){
+
+        postagemRepo.deleteById(id);
+        System.out.println("Deletou.");
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/postagem/delete/{id}")
+    public void deletarPorId(@PathVariable Long id){
+
+        deletarPostagem(id);
+    }
+
+    @PostMapping("/postagem/editar/{id}")
+    public String updatePostagem(@PathVariable Long id, @RequestParam String titulo, @RequestParam String conteudo, @RequestParam String urlFotoCapa, @RequestParam String categoria){
+
+        Optional<Postagem> postagemOpt = postagemRepo.findById(id);
+
+        if(postagemOpt.isPresent()){
+
+            Postagem postagem = postagemOpt.get();
+            postagem.setTitulo(titulo);
+            postagem.setConteudo(conteudo);
+            postagem.setUrlFotoCapa(urlFotoCapa);
+            postagem.setCategoria(CategoriaPostagemEnum.valueOf(categoria));
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            String data = java.time.LocalDate.now().format(formatter).toString();
+            postagem.setDataUltimaAtualizacao(data);
+
+            postagemRepo.save(postagem);
+        }
+
+        String tituloParaUri = titulo.replaceAll("[^A-Za-z0-9À-ú\\-]", "-");
+        return "redirect:/postagem/" + titulo;
+    }
 }
