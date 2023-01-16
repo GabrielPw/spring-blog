@@ -9,9 +9,12 @@ import com.gabrielxavier.blog.repository.PostagemRepository;
 import com.gabrielxavier.blog.repository.RoleRepository;
 import com.gabrielxavier.blog.repository.UsuarioRepository;
 import com.gabrielxavier.blog.service.PostagemService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +30,16 @@ import java.util.Optional;
 public class PostagemController {
     @Autowired
     PostagemRepository postagemRepo;
+
+    @GetMapping("/notFound")
+    public ModelAndView notFound(){
+
+        ModelAndView mv = new ModelAndView("notFound");
+        return mv;
+    }
+
     @GetMapping("/")
-    public ModelAndView home(){
+    public ModelAndView home(@AuthenticationPrincipal UserDetails user){
 
         System.out.println("\n\n\nHome...");
 
@@ -36,6 +47,7 @@ public class PostagemController {
 
         ModelAndView mv = new ModelAndView("home.html");
         mv.addObject("postagens", postagens);
+        mv.addObject("user", user);
         return mv;
     }
 
@@ -44,8 +56,8 @@ public class PostagemController {
 
         titulo = titulo.replace("-", " ");
         System.out.println("\nTitulo: " + titulo);
-        Postagem postagem = postagemRepo.findPostagemByTitulo(titulo);
 
+        Postagem postagem = postagemRepo.findPostagemByTitulo(titulo);
         ModelAndView mv = new ModelAndView("postagem_info");
 
         if (postagem != null){
@@ -62,10 +74,11 @@ public class PostagemController {
     }
 
     @PostMapping("postagem/new")
-    public String salvarPostagem(@RequestParam String titulo, @RequestParam String conteudo, @RequestParam String urlFotoCapa){
+    public String salvarPostagem(@RequestParam String titulo, @RequestParam String conteudo, @RequestParam String categoria, @RequestParam String urlFotoCapa){
 
         Postagem postagem = new Postagem();
         postagem.setTitulo(titulo);
+        postagem.setCategoria(CategoriaPostagemEnum.valueOf(categoria));
         postagem.setConteudo(conteudo);
         postagem.setUrlFotoCapa(urlFotoCapa);
 
@@ -78,18 +91,17 @@ public class PostagemController {
     }
 
     @DeleteMapping
-    public String deletarPostagem(Long id){
+    public void deletarPostagem(Long id){
 
         postagemRepo.deleteById(id);
-        System.out.println("Deletou.");
-
-        return "redirect:/";
+        System.out.println("\nPostagem de id: " + id + " deletado.");
     }
 
     @GetMapping("/postagem/delete/{id}")
-    public void deletarPorId(@PathVariable Long id){
+    public String deletarPorId(@PathVariable Long id){
 
         deletarPostagem(id);
+        return "redirect:/";
     }
 
     @PostMapping("/postagem/editar/{id}")

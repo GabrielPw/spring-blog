@@ -27,6 +27,17 @@ public class UsuarioController {
     @Autowired
     RoleRepository roleRepository;
 
+    @GetMapping("/login")
+    public String doLogin(@RequestParam String email, @RequestParam String senha){
+
+        Usuario user = usuarioRepo.findByEmailAndPassword(email, senha);
+
+        if(user == null){
+
+        }
+        return "d";
+    }
+
     @GetMapping("/usuario/all")
     public ModelAndView listarTodos(){
 
@@ -56,7 +67,6 @@ public class UsuarioController {
         usuario.setPassword(usuarioDto.getPassword());
 
         Role role = roleRepository.findRoleByName("USER");
-        usuario.setRole(Arrays.asList(role));
 
         if (existePorId(usuario.getId())){
             return null;

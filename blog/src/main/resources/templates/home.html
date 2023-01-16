@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" >
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -9,21 +10,11 @@
 </head>
 <body>
 
-    <div class="container banner">
-
-        <div th:if="${#ctx.springRequestContext.requestUri} == '/'" class="bg-primary">
-
-            <div class="bg-black bg-gradient p-2 btnContainer" style="--bs-bg-opacity: .5; width: 90%">
-                <button class="btn btn-success btn-NewPost" onclick="mudarVisibilidadeEditor()">Novo Post</button>
-            </div>
-        </div>
-    </div>
+    <!-- Banner -->
+    <header th:insert="~{fragments/fragments :: banner}"> </header>
 
     <!-- Opções de links -->
-    <div class="container d-flex flex-row mb-3">
-        <div class="p-2"><a href="/" class="text-muted">home</a></div>
-        <div class="p-2"><a href="/usuario/all"  class="text-muted">usuarios</a></div>
-    </div>
+    <nav th:insert="~{fragments/fragments :: links_menu}" class="container"></nav>
 
     <!-- Form novo post -->
     <div th:if="${#ctx.springRequestContext.requestUri} == '/'" class="container border p-1 rounded-end" id="editor_texto" style="display:none;">
@@ -54,9 +45,11 @@
     
     <!-- Título inicial da página -->
     <div th:if="${#ctx.springRequestContext.requestUri} == '/'" class="container">
+        <p th:if="${user != null}">Seja Bem-vindo <span th:text="${user.username}" style="color:red; text-transform:capitalize;"></span></p>
         <h1 class="display-4">Postagens</h1>
         <p >Projeto de Blog construido com tecnologia Spring Boot.</p>
     </div>
+
 
     <!-- listagem de posts -->
     <div th:if="${#ctx.springRequestContext.requestUri} == '/'" class="container div_postagems">
@@ -64,18 +57,17 @@
             <div class="row">
                 <div th:each="postagem : ${postagens}" class="divCards p-2 col-6 col-sm-3">
                     <div class="card p-2" style="width: 18rem;">
-                        <div class="info_post">
+                        <div class="info_post" sec:authorize="hasAuthority('ADMIN')">
                             <p th:text="${postagem.dataPostagem}" class="text-muted"></p><a th:href="'/postagem/delete/' + ${postagem.id}"><i class="bi bi-trash3-fill" style="color: rgb(142, 68, 62)"></i></a>
                         </div>
-                        <img th:src="@{${postagem.urlFotoCapa}}" alt="foto de capa do post" class="rounded">
+                        <img th:unless="${postagem.urlFotoCapa} == null OR ${postagem.urlFotoCapa} == ''" th:src="@{${postagem.urlFotoCapa}}" alt="foto de capa do post" class="rounded">
                         <div class="card-body">
                             <h5 th:text="${postagem.titulo}" class="card-title" style="margin:0"></h5>
                             <span th:text="${postagem.categoria}" class="categoria_post text-muted fs-6" style="padding-bottom:25px"></span>
                             <hr class="border border-1 opacity-50">
-                            <p th:text="${#strings.abbreviate(postagem.conteudo, 70)}" class="card-text fs-6"></p> <p><a th:href="@{'/postagem/' + ${#strings.toLowerCase(postagem.titulo.replaceAll('[^A-Za-z0-9À-ú\-]', '-'))}}" class="text-info">Ler mais...</a></p>
+                            <p th:utext="${#strings.abbreviate(postagem.conteudo, 70)}" class="card-text fs-6"></p> <p><a th:href="@{'/postagem/' + ${#strings.toLowerCase(postagem.titulo.replaceAll('[^A-Za-z0-9À-ú\-]', '-'))}}" class="text-info">Ler mais...</a></p>
                         </div>
 
-                        <!-- th:href="@{'/postagem/delete/' + ${postagem.id}}" -->
                         <p id="demo" style="display:none"></p>
                     </div>
                 </div>
@@ -93,6 +85,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Authorities</th>
             </tr>
             </thead>
             <tbody>
@@ -100,6 +93,7 @@
                 <td th:text="${usuario.id}">1</td>
                 <td th:text="${usuario.name}">Name ...</a></td>
                 <td th:text="${usuario.email}">Email ...</td>
+                <td th:text="${usuario.role}">Permissões ...</td>
             </tr>
             </tbody>
         </table>

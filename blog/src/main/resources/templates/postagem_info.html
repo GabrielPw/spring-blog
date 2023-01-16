@@ -1,44 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:fragment="banner">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${postagem.titulo}">Title</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../static/css/style_home.css" th:href="@{/css/style_home.css}">
 </head>
 <body>
 
-    <div class="container banner">
+    <!--Banner-->
+    <header th:insert="~{fragments/fragments :: banner}"> </header>
 
-        <div th:if="${#ctx.springRequestContext.requestUri} == '/'" class="bg-primary">
-            <div class="bg-black bg-gradient p-2 btnContainer" style="--bs-bg-opacity: .5; width: 90%">
-                <button class="btn btn-success btn-NewPost" onclick="mudarVisibilidadeEditor()">Novo Post</button>
-            </div>
-        </div>
-
-
-    </div>
     <!-- Opções de links -->
-    <div class="container d-flex flex-row mb-3">
-        <div class="p-2"><a href="/" class="text-muted">home</a></div>
-        <div class="p-2"><a href="/usuario/all"  class="text-muted">usuarios</a></div>
-    </div>
-
-    <div th:if= "${postagem} == null" class="container"> <!-- Postagem passada é nula. -->
-        <h1 class="display-3">404 - Not Found</h1>
-        <p>Página não encontrada.</p>
-    </div>
+    <nav th:insert="~{fragments/fragments :: links_menu}" class="container"></nav>
+    <div th:if= "${postagem} == null" class="container" th:insert="fragments/fragments :: not_found"> <!-- Postagem passada é nula. --></div>
 
     <div th:unless="${postagem} == null"}> <!-- Postagem passada não é nula. -->
 
         <div class="container" id="div_postagem">
 
             <h1 th:text="${postagem.titulo}" ></h1>
-            <p onclick="editar_postagem()"><i class="bi bi-pencil-fill editar_post" style="color:gray;"></i> <a class="text-muted" style="cursor: pointer;">Editar postagem</a></p>
+            <p sec:authorize="hasAuthority('ADMIN')" onclick="editar_postagem()"><i class="bi bi-pencil-fill editar_post" style="color:gray;"></i> <a class="text-muted" style="cursor: pointer;">Editar postagem</a></p>
             <p><i class="bi bi-tag-fill" style="color:gray;"></i>Categoria: <span th:text="${postagem.categoria}"class="categoria_post"></span></p>
-            <img th:src="@{${postagem.urlFotoCapa}}" class="main_image_post rounded float-start m-2">
-            <p th:utext="${postagem.conteudo}"/>
+            <p th:unless="${postagem.dataUltimaAtualizacao} == null OR ${postagem.dataUltimaAtualizacao} == ''" class="m-0"><i class="bi bi-calendar-check-fill" style="color:gray;"></i>Última atualização: <span th:text="${postagem.dataUltimaAtualizacao}"class="categoria_post"></span></p>
+            <img th:unless="${postagem.urlFotoCapa} == null OR ${postagem.urlFotoCapa} == ''" th:src="@{${postagem.urlFotoCapa}}" class="main_image_post rounded float-start m-2">
+            <div th:utext="${postagem.conteudo}"></div>
         </div>
 
         <!-- Form atualizar post -->

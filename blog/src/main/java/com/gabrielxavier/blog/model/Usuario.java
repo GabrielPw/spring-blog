@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -22,9 +21,12 @@ public class Usuario {
     private String email;
     private String password;
 
-    // Cria uma relação ManyToMany criando uma nova tabela que armazena as chaves primárias da outras duas.
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> role = new ArrayList<>();
+//    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+//    private boolean enabled;
+
+    private String role;
+
+    public Long getId() {
+        return id;
+    }
 }
