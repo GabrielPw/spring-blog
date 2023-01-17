@@ -22,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -45,6 +46,7 @@ public class WebApplicationConfig implements WebMvcConfigurer {
         return container ->{
 
             container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/notFound"));
+            container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notFound"));
         };
     }
 
@@ -65,8 +67,15 @@ public class WebApplicationConfig implements WebMvcConfigurer {
                 .requestMatchers("/**").permitAll();
 
         http.httpBasic().and()
-                .formLogin()
-                .and().logout().permitAll().logoutSuccessUrl("/");
+                .formLogin().loginPage("/login").permitAll()
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .loginProcessingUrl("/doLogin")
+                //.failureForwardUrl("/login_failure_handler")
+
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true);
 
         return http.build();
     }

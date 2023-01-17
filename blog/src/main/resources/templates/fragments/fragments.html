@@ -17,8 +17,9 @@
     <div th:fragment="links_menu" class="container d-flex flex-row mb-3">
         <div class="p-2"><a href="/" class="text-muted">home</a></div>
         <div sec:authorize="hasAuthority('ADMIN')" class="p-2"><a href="/usuario/all"  class="text-muted">usuarios</a></div>
+        <div sec:authorize="not isAuthenticated()"class="p-2"><a href="/register"  class="text-muted">Register</a></div>
         <div sec:authorize="not isAuthenticated()"class="p-2"><a href="/login"  class="text-muted">Login</a></div>
-        <div sec:authorize="isAuthenticated()" class="p-2"><a href="/logout"  class="text-muted">Logout</a></div>
+        <div sec:authorize="isAuthenticated()" class="p-2"><a href="/logout" th:action="@{/logout}" method="post" class="text-muted">Logout</a></div>
 
     </div>
 

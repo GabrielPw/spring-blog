@@ -10,9 +10,12 @@
 </head>
 <body>
 
+    <!-- Banner -->
+    <header th:insert="~{fragments/fragments :: banner}"> </header>
+
     <div class="container">
         <h1>Faça Login</h1>
-        <form action="" method="post">
+        <form th:action="@{/doLogin}" method="post" class="form-signin">
             <div class="mb-3">
                 <label for="inputEmail" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" name="email">
@@ -26,6 +29,8 @@
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
             </div>
+            <span th:if="${param.error}" style="color:red;">Credenciais Inválidas.</span>
+            <br>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
