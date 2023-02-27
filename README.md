@@ -1,7 +1,8 @@
 # spring-blog
 
 A simple blog project where you can do your posts.
-You can visit the blog here: https://gabriel-spring-blog.onrender.com/
+You can visit the blog here:<br>
+https://gabriel-spring-blog.onrender.com/
 
 (The site can take some time to load because it are being hosted in a free plan of Render)
 
