@@ -13,6 +13,7 @@ This project was made using the following technologies:
   -**Thymeleaf**<br>
   -**Bootstrap**<br>
   -**HTML, CSS, Javascript**<br>
+  -**MySQL**
 
 Screenshot:<br>
 **Initial Page containing the posts**
