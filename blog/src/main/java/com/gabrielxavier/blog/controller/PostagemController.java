@@ -20,11 +20,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.Normalizer;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Controller
 public class PostagemController {
@@ -54,7 +56,16 @@ public class PostagemController {
     @GetMapping("postagem/{titulo}")
     public ModelAndView obterPorTitulo(@PathVariable String titulo){
 
-        titulo = titulo.replace("-", " ");
+        System.out.println("\nTitulo que chegou do método: " + titulo);
+
+        if (postagemRepo.findPostagemByTitulo(titulo) == null) {
+            titulo = titulo.replace("-", " ");
+        }
+//        titulo.replaceAll("[^A-Za-z0-9\\-]", "-");
+
+        // Remover acentuos (para não termos problemas com criação na url).
+
+        titulo = deAccent(titulo);
         System.out.println("\nTitulo: " + titulo);
 
         Postagem postagem = postagemRepo.findPostagemByTitulo(titulo);
@@ -124,7 +135,15 @@ public class PostagemController {
             postagemRepo.save(postagem);
         }
 
-        String tituloParaUri = titulo.replaceAll("[^A-Za-z0-9À-ú\\-]", "-");
-        return "redirect:/postagem/" + titulo;
+        // Regex originalmente usado: "[^A-Za-z0-9À-ú\\-]".
+        String tituloParaUri = titulo.replaceAll("[^A-Za-z0-9\\-]", "-");
+
+        return "redirect:/postagem/" + postagemOpt.get().removeAccentFromTitulo();
+    }
+
+    public static String deAccent(String str) {
+        String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfdNormalizedString).replaceAll("");
     }
 }

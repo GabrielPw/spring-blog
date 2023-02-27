@@ -64,8 +64,8 @@
                         <div class="card-body">
                             <h5 th:text="${postagem.titulo}" class="card-title" style="margin:0"></h5>
                             <span th:text="${postagem.categoria}" class="categoria_post text-muted fs-6" style="padding-bottom:25px"></span>
-                            <hr class="border border-1 opacity-50">
-                            <p th:utext="${#strings.abbreviate(postagem.conteudo, 70)}" class="card-text fs-6"></p> <p><a th:href="@{'/postagem/' + ${#strings.toLowerCase(postagem.titulo.replaceAll('[^A-Za-z0-9À-ú\-]', '-'))}}" class="text-info">Ler mais...</a></p>
+                            <hr class="border border-1 opacity-50">                                                                 <!-- @{'/postagem/' + ${#strings.toLowerCase(postagem.titulo.replaceAll('[^A-Za-z0-9À-ú\-]', '-'))}} -->
+                            <p th:utext="${#strings.abbreviate(postagem.conteudo, 70)}" class="card-text fs-6"></p> <p><a th:href="@{'/postagem/' + ${postagem.removeAccentFromTitulo()}}" class="text-info">Ler mais...</a></p>
                         </div>
 
                         <p id="demo" style="display:none"></p>

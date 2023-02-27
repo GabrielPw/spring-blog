@@ -6,6 +6,8 @@ public enum CategoriaPostagemEnum {
     ARTE,
     CIENCIA,
     FILOSOFIA,
+    JOGO,
     LITERATURA,
-    MUSICA
+    MUSICA,
+     TECNOLOGIA,
 }
