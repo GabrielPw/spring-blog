@@ -5,7 +5,7 @@ You can visit the blog here:<br>
 
 https://gabriel-spring-blog.onrender.com/
 
-(only the admin can make new posts)
+(only the admin profile can make new posts)
 (The site can take some time to load because it are being hosted in a free plan of Render)
 
 This project was made using the following technologies:
