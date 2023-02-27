@@ -1,10 +1,4 @@
 
-
-insert into usuario values(1,"gabriel@gmail.com","Gabriel", "123123", "ADMIN");
-insert into usuario values(2,"matheus@gmail.com","Matheus", "123123", "USER");
-
--- Bcript para "123123" --> $2a$10$AIiXc9W7KwMnym6Y9E8gBe8rJ7zpC6R/TT/B2k.Y7LfiV5L3U85Sq
-
 -- Postagem
 
 insert into postagem values( ,"",
@@ -32,5 +26,3 @@ insert into postagem values(4 ,"O conjunto tem o nome de Benoit B. Mandelbrot, u
 insert into postagem values(5 ,"Fiódor Mikhailovitch Dostoiévski (Moscou/Moscovo, 11 de novembro de 1821 - São Petersburgo, 9 de fevereiro de 1881) foi um escritor, filósofo e jornalista do Império Russo. É considerado um dos maiores romancistas e pensadores da história, bem como um dos maiores 'psicólogos' que já existiram (na acepção mais ampla do termo, como investigadores da psiquê). Após o término de sua formação acadêmica como engenheiro, Dostoiévski trabalhou integralmente como escritor, produzindo romances, novelas, contos, memórias, escritos jornalísticos e escritos críticos. Além disso, atuou como editor em revistas próprias, como preceptor e participou de atividades políticas. Suas obras mais importantes foram as literárias, onde abordou, entre outros temas, o significado do sofrimento e da culpa, o livre-arbítrio, o cristianismo, o racionalismo, o niilismo, a pobreza, a violência, o assassinato, o altruísmo, além de analisar transtornos mentais, muitas vezes ligados à humilhação, ao isolamento, ao sadismo, ao masoquismo e ao suicídio. Pela retratação filosófica e psicológica profunda e atemporal dessas questões, seus escritos são comumente chamados de romances filosóficos e romances psicológicos.",
                             "Fiódor Dostoiévski",
                              "https://imgs.search.brave.com/7sQ0MMM18gig1Lmw-GEydbbjUNQyuPbY0oLQY_1tOlo/rs:fit:1200:675:1/g:ce/aHR0cHM6Ly9va2Rp/YXJpby5jb20vaW1n/LzIwMTcvMTAvMjcv/ZG9zdG9pZXZzay0y/LmpwZw");
-
--- Imagem (DBZ): https://imgs.search.brave.com/AJc8TWK17KRv4zoklrTE3p4rT7qDqb_o__hUO5Ke7c0/rs:fit:1200:645:1/g:ce/aHR0cHM6Ly9jZG4u/aG9iYnljb25zb2xh/cy5jb20vc2l0ZXMv/bmF2aS5heGVsc3By/aW5nZXIuZXMvcHVi/bGljL3N0eWxlcy8x/MjAwL3B1YmxpYy9t/ZWRpYS9pbWFnZS8y/MDIxLzA1L2RyYWdv/bi1iYWxsLXNvbi1n/b2t1LWFtaWdvcy0y/MzI0MDI5LmpwZz9p/dG9rPU5WRWd2NFNB
