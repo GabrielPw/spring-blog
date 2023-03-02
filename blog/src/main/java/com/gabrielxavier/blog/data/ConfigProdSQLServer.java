@@ -28,9 +28,9 @@ public class ConfigProdSQLServer {
             System.out.println("Erro. Checar variavel de ambiente pra conexao do banco.");
         }
 
-        String username = System.getenv("user id");
+        String username = System.getenv("user_id");
         String password = System.getenv("pwd");
-        String catalog = System.getenv("initial catalog");
+        String catalog = System.getenv("catalog");
 
         String dbUrl = "jdbc:sqlserver://" + dbUri + ";packet size=4096;user=" + username + ";password=" + password + ";data source =" + dbUri + ";persist security info=False;initial catalog=" + catalog + ";encrypt=true;trustServerCertificate=true;";
 
