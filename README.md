@@ -19,7 +19,8 @@ This project was made using the following technologies:
 
 Screenshot:<br>
 **Initial Page containing the posts**
-![tela-inicio](https://user-images.githubusercontent.com/74604806/221670083-33c82761-5266-42ac-a1e2-fac9033e070c.png)
+![blog-tela-inicial](https://user-images.githubusercontent.com/74604806/223113776-a66934f2-11ff-4180-bb4f-1fa0d10cfd9b.PNG)
+
 
 **Login Page**
 ![loginpage](https://user-images.githubusercontent.com/74604806/221671672-3465ca86-aa49-4f06-bf67-6b295f838e7c.PNG)
