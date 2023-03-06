@@ -1,0 +1,77 @@
+
+.sidebar{
+
+    position: fixed;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #474747;
+    height: 100%;
+    width:80px;
+
+    z-index:2;
+    transition: 0.5s;
+}
+
+.sidebar span{
+    display: none;
+}
+
+.sidebar a{
+
+    align-items: center;
+    margin: 5px;
+    color: wheat;
+    text-decoration: none;
+}
+
+.sidebar a:hover{
+    color: rgb(216, 174, 140);
+}
+
+.sidebar img{
+
+    position: relative;
+    border-radius: 60%;
+    width: 25%;
+    margin-top: 20px;
+    background-color: #3d3d3d;
+}
+
+.myprofile{
+    color: wheat;
+    margin-bottom: 15px;
+    text-decoration: underline;
+}
+
+.main{
+
+  margin-left: 85px;
+  transition: 0.5s;
+  z-index: 2;
+}
+
+
+@media screen and (max-width: 1478px) and (min-width: 1400px){
+
+  .sidebar
+  {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1330px) and (min-width: 992px) {
+
+  .sidebar
+  {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 716px){
+
+  .sidebar
+  {
+    display: none;
+  }
+}

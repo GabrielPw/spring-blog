@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Controller
 public class PostagemController {
@@ -146,4 +147,45 @@ public class PostagemController {
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(nfdNormalizedString).replaceAll("");
     }
+
+    @GetMapping("/search")
+    public ModelAndView searchPosts(@RequestParam("query") String query, @AuthenticationPrincipal UserDetails user) {
+
+
+        if (query.equals("TODOS")){
+
+            return home(user);
+        }
+        List<Postagem> posts = search(query);
+
+        ModelAndView mv = new ModelAndView("home.html");
+        mv.addObject("postagens", posts);
+        mv.addObject("query", query);
+
+        boolean listaVazia = (posts.size() == 0 || posts == null)? true: false;
+        mv.addObject("listaVazia", listaVazia);
+        System.out.println("Postagens passadas para a query : " + posts);
+        mv.addObject("user", user);
+
+        return mv;
+    }
+
+    public List<Postagem> search(String query) {
+        List<Postagem> posts = postagemRepo.findAll();
+        List<Postagem> matchingPosts = new ArrayList<>();
+
+        for (Postagem post : posts) {
+            if (post.getCategoria().name().contains(query)) {
+                matchingPosts.add(post);
+            }
+        }
+
+        System.out.println("Query feita --> " + query);
+
+        matchingPosts.stream().map(Postagem::getTitulo).collect(Collectors.toList()).forEach(System.out::println);
+        return matchingPosts;
+    }
+
+
+
 }
