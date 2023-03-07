@@ -5,6 +5,6 @@ RUN mvn -f /app/pom.xml clean package -Dmaven.test.skip
 
 
 FROM openjdk:19-alpine
-EXPOSE 8080
+EXPOSE 8090
 COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "/app.jar"]
