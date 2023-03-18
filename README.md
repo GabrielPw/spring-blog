@@ -26,5 +26,5 @@ Screenshot:<br>
 ![loginpage](https://user-images.githubusercontent.com/74604806/221671672-3465ca86-aa49-4f06-bf67-6b295f838e7c.PNG)
 
 <div>
-  <img src="../images/apresentacao-blog-gif.gif">
+  <img src="blog/images/apresentacao-blog-gif.gif">
 </div>
