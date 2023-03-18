@@ -186,6 +186,4 @@ public class PostagemController {
         return matchingPosts;
     }
 
-
-
 }

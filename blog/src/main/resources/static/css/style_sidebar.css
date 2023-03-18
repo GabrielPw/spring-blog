@@ -12,6 +12,21 @@
     z-index:2;
     transition: 0.5s;
 }
+.sidebar-profile{
+    align-items: center;
+    display:flex;
+    flex-direction: column;
+    background-image: url('https://images.pexels.com/photos/1656141/pexels-photo-1656141.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+}
+
+.sidebar-profile span{
+
+    width: 100%;
+   text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+
+}
 
 .sidebar span{
     display: none;

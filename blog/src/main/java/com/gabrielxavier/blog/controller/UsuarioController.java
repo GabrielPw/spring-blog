@@ -93,4 +93,11 @@ public class UsuarioController {
         usuarioRepo.save(usuario);
         return usuario;
     }
+
+    @GetMapping("/sobre")
+    ModelAndView sobre(){
+
+        ModelAndView mv = new ModelAndView("about.html");
+        return mv;
+    }
 }
